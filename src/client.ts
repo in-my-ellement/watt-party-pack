@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import nipplejs from 'nipplejs';
+import VirtualJoystick from "./joystick.js";
 import PartySocket from "partysocket";
 
 declare const PARTYKIT_HOST: string;
@@ -27,25 +27,18 @@ const conn = new PartySocket({
 document.getElementById("A").addEventListener("click", () => conn.send("A"));
 document.getElementById("B").addEventListener("click", () => conn.send("B"));
 
-// setup joystick
-let joystick = nipplejs.create({
-	// div to insert into
-	zone: document.getElementById("joystickDiv"),
+// instnatiate joystick
+const joystick = new VirtualJoystick(
+	document.getElementById("joystickDiv"), 
+	{
+		width: 150,
+		height: 150,
+		color: 'gray',
+		handleColor: 'black',
+		onChange: function(d) {
+			conn.send(`${d.x} ${d.y}`)
+		}
 
-	// wont move around the screen
-	mode: 'static',
-
-	// styling
-	position: { left: '50%', top: '50%'},
-	color: 'red'
-});
-
-// listen for joystick movement
-joystick.on("move", (evt, data) => {
-	// send this to the backend
-	let x: float = (data.position.x - joystick[0].position.x) / 50;
-	let y: float = (data.position.y - joystick[0].position.y) / 50;
-	conn.send(`${x} ${y}`);
 });
 
 // Let's listen for when the connection opens

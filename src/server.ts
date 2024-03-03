@@ -42,7 +42,7 @@ export default class Server implements Party.Server {
 	serverMsg.joy.x = coords[0];
 	serverMsg.joy.y = coords[1];
     }
-
+    
     // broadcast it so that the server can access it
     // this is jank
     this.room.broadcast(JSON.stringify(serverMsg));
