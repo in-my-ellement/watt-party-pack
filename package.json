@@ -1,0 +1,18 @@
+{
+  "name": "watt-party-pack",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "partykit dev --live",
+    "deploy": "partykit deploy"
+  },
+  "dependencies": {
+    "nipplejs": "^0.10.1",
+    "partysocket": "^1.0.0",
+    "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "partykit": "^0.0.96",
+    "typescript": "^5.3.3"
+  }
+}

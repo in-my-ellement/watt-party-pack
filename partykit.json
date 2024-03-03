@@ -1,0 +1,10 @@
+{
+  "$schema": "https://www.partykit.io/schema.json",
+  "name": "watt-party-pack",
+  "main": "src/server.ts",
+  "compatibilityDate": "2024-03-02",
+  "serve": {
+    "path": "public",
+    "build": "src/client.ts"
+  }
+}
