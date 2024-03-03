@@ -23,9 +23,11 @@ const conn = new PartySocket({
   room: "my-new-room",
 });
 
+let userId: int = -1;
+// cring
 // listen for button presses
-document.getElementById("A").addEventListener("click", () => conn.send("A"));
-document.getElementById("B").addEventListener("click", () => conn.send("B"));
+document.getElementById("A").addEventListener("click", () => conn.send(`${userId} A`));
+document.getElementById("B").addEventListener("click", () => conn.send(`${userId} B`));
 
 // instnatiate joystick
 const joystick = new VirtualJoystick(
@@ -36,7 +38,7 @@ const joystick = new VirtualJoystick(
 		color: 'gray',
 		handleColor: 'black',
 		onChange: function(d) {
-			conn.send(`${d.x} ${d.y}`)
+			conn.send(`${userId} ${d.x} ${d.y}`)
 		}
 
 });
@@ -47,7 +49,17 @@ conn.addEventListener("open", () => {
   add("Connected!");
 
   // initialize a game
-  document.getElementById("username").innerHtml = `Name: aaa`;
 
   // continually send input to the server
+});
+
+
+// receive the user id
+conn.addEventListener("message", (event) => {
+	// log the id
+	if (userId == -1 && event.data.match(/^\d*\d$/)) {
+		userId = parseInt(event.data);
+		console.log(userId);
+	document.getElementById("username").textContent = `Name: ${userId}`;
+	}
 });
